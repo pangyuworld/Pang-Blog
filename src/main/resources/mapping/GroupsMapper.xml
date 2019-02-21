@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pang.blog.dao.GroupsMapper">
+    <resultMap id="BaseResultMap" type="com.pang.blog.entity.Groups">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="group_name" property="groupName" jdbcType="VARCHAR"/>
+        <result column="group_order" property="groupOrder" jdbcType="TINYINT"/>
+        <result column="group_show" property="groupShow" jdbcType="BIT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, group_name, group_order, group_show
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from groups
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from groups
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.pang.blog.entity.Groups">
+    insert into groups (id, group_name, group_order, 
+      group_show)
+    values (#{id,jdbcType=INTEGER}, #{groupName,jdbcType=VARCHAR}, #{groupOrder,jdbcType=TINYINT}, 
+      #{groupShow,jdbcType=BIT})
+  </insert>
+    <insert id="insertSelective" parameterType="com.pang.blog.entity.Groups">
+        insert into groups
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="groupName != null">
+                group_name,
+            </if>
+            <if test="groupOrder != null">
+                group_order,
+            </if>
+            <if test="groupShow != null">
+                group_show,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="groupName != null">
+                #{groupName,jdbcType=VARCHAR},
+            </if>
+            <if test="groupOrder != null">
+                #{groupOrder,jdbcType=TINYINT},
+            </if>
+            <if test="groupShow != null">
+                #{groupShow,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pang.blog.entity.Groups">
+        update groups
+        <set>
+            <if test="groupName != null">
+                group_name = #{groupName,jdbcType=VARCHAR},
+            </if>
+            <if test="groupOrder != null">
+                group_order = #{groupOrder,jdbcType=TINYINT},
+            </if>
+            <if test="groupShow != null">
+                group_show = #{groupShow,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pang.blog.entity.Groups">
+    update groups
+    set group_name = #{groupName,jdbcType=VARCHAR},
+      group_order = #{groupOrder,jdbcType=TINYINT},
+      group_show = #{groupShow,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="selectAllGroups" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from groups
+        ORDER by group_order
+    </select>
+    <select id="getNumArticle" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+    select
+    count(*)
+    from articles
+    where article_group=#{id}
+  </select>
+
+    <update id="upadteGroupList" parameterType="java.util.Map">
+        <foreach collection="list" item="bean" open="" close="" separator=";" index="index">
+            update groups
+            <set>
+                group_name = #{bean.groupName,jdbcType=VARCHAR},
+                group_order = #{bean.groupOrder,jdbcType=TINYINT},
+                group_show = #{bean.groupShow,jdbcType=BIT},
+            </set>
+            <where>
+                groups.id=#{bean.id,jdbcType=INTEGER}
+            </where>
+        </foreach>
+    </update>
+</mapper>

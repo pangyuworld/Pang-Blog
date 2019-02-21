@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pang.blog.dao.ConfigMapper">
+    <resultMap id="BaseResultMap" type="com.pang.blog.entity.Config">
+        <id column="blog_key" property="blogKey" jdbcType="VARCHAR"/>
+        <result column="blog_value" property="blogValue" jdbcType="VARCHAR"/>
+        <result column="blog_note" property="blogNote" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    blog_key, blog_value, blog_note
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from config
+        where blog_key = #{blogKey,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from config
+    where blog_key = #{blogKey,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.pang.blog.entity.Config">
+    insert into config (blog_key, blog_value, blog_note
+      )
+    values (#{blogKey,jdbcType=VARCHAR}, #{blogValue,jdbcType=VARCHAR}, #{blogNote,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.pang.blog.entity.Config">
+        insert into config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="blogKey != null">
+                blog_key,
+            </if>
+            <if test="blogValue != null">
+                blog_value,
+            </if>
+            <if test="blogNote != null">
+                blog_note,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="blogKey != null">
+                #{blogKey,jdbcType=VARCHAR},
+            </if>
+            <if test="blogValue != null">
+                #{blogValue,jdbcType=VARCHAR},
+            </if>
+            <if test="blogNote != null">
+                #{blogNote,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pang.blog.entity.Config">
+        update config
+        <set>
+            <if test="blogValue != null">
+                blog_value = #{blogValue,jdbcType=VARCHAR},
+            </if>
+            <if test="blogNote != null">
+                blog_note = #{blogNote,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where blog_key = #{blogKey,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pang.blog.entity.Config">
+    update config
+    set blog_value = #{blogValue,jdbcType=VARCHAR},
+      blog_note = #{blogNote,jdbcType=VARCHAR}
+    where blog_key = #{blogKey,jdbcType=VARCHAR}
+  </update>
+    <select id="getConfigList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from config
+        GROUP by blog_key
+        ORDER BY FIELD(blog_key, 'blog-name', 'blog-hello', 'blog-icon',
+        'blog-message','blog-git','blog-adminer','blog-adress','blog-filing')
+    </select>
+    <update id="upadteConfigList" parameterType="java.util.Map">
+        <foreach collection="list" item="bean" open="" close="" separator=";" index="index">
+            update config
+            <set>
+                config.blog_value=#{bean.blogValue,jdbcType=VARCHAR}
+            </set>
+            <where>
+                config.blog_key=#{bean.blogKey,jdbcType=VARCHAR}
+            </where>
+        </foreach>
+    </update>
+</mapper>

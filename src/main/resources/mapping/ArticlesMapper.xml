@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pang.blog.dao.ArticlesMapper">
+    <resultMap id="BaseResultMap" type="com.pang.blog.entity.Articles">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="texts" property="texts" jdbcType="VARCHAR"/>
+        <result column="first_time" property="firstTime" jdbcType="TIMESTAMP"/>
+        <result column="last_time" property="lastTime" jdbcType="TIMESTAMP"/>
+        <result column="click_num" property="clickNum" jdbcType="INTEGER"/>
+        <result column="article_group" property="articleGroup" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="show" property="show" jdbcType="BIT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, texts, first_time, last_time, click_num, article_group, title ,articles.show
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from articles
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from articles
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.pang.blog.entity.Articles" useGeneratedKeys="true" keyProperty="id">
+    insert into articles (id, texts, first_time, 
+      last_time, click_num, article_group, 
+      title,show)
+    values (#{id,jdbcType=INTEGER}, #{texts,jdbcType=VARCHAR}, #{firstTime,jdbcType=TIMESTAMP}, 
+      #{lastTime,jdbcType=TIMESTAMP}, #{clickNum,jdbcType=INTEGER}, #{articleGroup,jdbcType=INTEGER}, 
+      #{title,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.pang.blog.entity.Articles" keyProperty="id" useGeneratedKeys="true" keyColumn="id">
+        insert into articles
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="texts != null">
+                texts,
+            </if>
+            <if test="firstTime != null">
+                first_time,
+            </if>
+            <if test="lastTime != null">
+                last_time,
+            </if>
+            <if test="clickNum != null">
+                click_num,
+            </if>
+            <if test="articleGroup != null">
+                article_group,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="show != null">
+                articles.show,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="texts != null">
+                #{texts,jdbcType=VARCHAR},
+            </if>
+            <if test="firstTime != null">
+                #{firstTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastTime != null">
+                #{lastTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="clickNum != null">
+                #{clickNum,jdbcType=INTEGER},
+            </if>
+            <if test="articleGroup != null">
+                #{articleGroup,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+
+            <if test="show != null">
+                #{show,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pang.blog.entity.Articles">
+        update articles
+        <set>
+            <if test="texts != null">
+                texts = #{texts,jdbcType=VARCHAR},
+            </if>
+            <if test="firstTime != null">
+                first_time = #{firstTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastTime != null">
+                last_time = #{lastTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="clickNum != null">
+                click_num = #{clickNum,jdbcType=INTEGER},
+            </if>
+            <if test="articleGroup != null">
+                article_group = #{articleGroup,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="show != null">
+                articles.show = #{show,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pang.blog.entity.Articles">
+    update articles
+    set texts = #{texts,jdbcType=VARCHAR},
+      first_time = #{firstTime,jdbcType=TIMESTAMP},
+      last_time = #{lastTime,jdbcType=TIMESTAMP},
+      click_num = #{clickNum,jdbcType=INTEGER},
+      article_group = #{articleGroup,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="selectAllArticle" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from articles
+        order by first_time desc
+    </select>
+
+    <select id="selectByPage" resultMap="BaseResultMap" parameterType="Map">
+        select
+        <include refid="Base_Column_List"/>
+        from articles
+        ORDER BY first_time DESC
+        limit #{currIndex} , #{pageSize}
+    </select>
+
+    <select id="selectSumArticle" resultType="java.lang.Integer">
+    select
+    COUNT(*)
+    from articles
+    where articles.`show`=1
+  </select>
+    <select id="selectAllSumArticle" resultType="java.lang.Integer">
+    select
+    COUNT(*)
+    from articles
+  </select>
+
+    <select id="selectMaxClick" resultMap="BaseResultMap">
+        select
+        id, first_time, last_time, click_num, article_group, title, a.show
+        from articles a
+        where a.show>0
+        ORDER BY click_num DESC
+        limit 7
+    </select>
+
+    <select id="selectByGroup" resultMap="BaseResultMap" parameterType="Map">
+        select
+        <include refid="Base_Column_List"/>
+        from articles
+        where article_group=#{articleGroup}
+        ORDER BY first_time DESC
+    </select>
+</mapper>

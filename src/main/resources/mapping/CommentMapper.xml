@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pang.blog.dao.CommentMapper" >
+  <resultMap id="BaseResultMap" type="com.pang.blog.entity.Comment" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="comment_texts" property="commentTexts" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="mail" property="mail" jdbcType="VARCHAR" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="article_id" property="articleId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, comment_texts, username, mail, ip, time, article_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from comment
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from comment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pang.blog.entity.Comment" >
+    insert into comment (id, comment_texts, username, 
+      mail, ip, time, article_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{commentTexts,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{mail,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, #{articleId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pang.blog.entity.Comment" >
+    insert into comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="commentTexts != null" >
+        comment_texts,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="mail != null" >
+        mail,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="articleId != null" >
+        article_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="commentTexts != null" >
+        #{commentTexts,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="mail != null" >
+        #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="articleId != null" >
+        #{articleId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pang.blog.entity.Comment" >
+    update comment
+    <set >
+      <if test="commentTexts != null" >
+        comment_texts = #{commentTexts,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="mail != null" >
+        mail = #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="articleId != null" >
+        article_id = #{articleId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pang.blog.entity.Comment" >
+    update comment
+    set comment_texts = #{commentTexts,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      mail = #{mail,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      time = #{time,jdbcType=TIMESTAMP},
+      article_id = #{articleId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByArticleId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from comment
+    where article_id = #{id,jdbcType=INTEGER}
+    order by time
+  </select>
+
+  <select id="numByArticleId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+    select
+    count(*)
+    from comment
+    where article_id=#{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteCommentByArticle" parameterType="java.lang.Integer">
+      delete from comment
+      <where>
+        groups.id=#{id,jdbcType=INTEGER}
+      </where>
+  </delete>
+</mapper>
