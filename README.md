@@ -20,7 +20,7 @@ Api全局使用了**Restful Api**风格，实现了前后端分离的开发模�
 
 # 3、前端部分（代码见vue分支）
 
-前端部分使用了渐进式 JavaScript 框架**[Vue.js](https://cn.vuejs.org/)**。
+前端部分使用了渐进式 JavaScript 框架**[Vue.js](https://cn.vuejs.org/)**和**[iView](https://www.iviewui.com/)**UI框架。
 
 使用**[vue-router](https://router.vuejs.org/zh/)**进行路由管理。
 
