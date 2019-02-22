@@ -6,12 +6,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.MultipartConfigElement;
 
 @SpringBootApplication
 @ServletComponentScan
 @MapperScan("com.pang.blog.dao")
+@Configuration
 public class PangBlogApplication  {
 
     public static void main(String[] args) {

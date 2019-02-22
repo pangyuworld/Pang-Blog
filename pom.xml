@@ -13,6 +13,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>pang-blog</name>
     <description>WEB project from pang</description>
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>1.8</java.version>
@@ -111,8 +112,17 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.pang.blog.PangBlogApplication</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
-
             <!--mybatis-->
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
