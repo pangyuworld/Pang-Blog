@@ -1,6 +1,6 @@
-
 <script>
-const adress = "http://localhost:8877";
+// const adress = "http://localhost:8877";
+const adress = ADDRESS;
 function isEmpty(obj) {
   if (typeof obj == "undefined" || obj == null || obj == "") {
     return true;
