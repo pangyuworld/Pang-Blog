@@ -32,10 +32,19 @@ public class ImagaController {
     @Token
     @ApiOperation("文章图片上传")
     @RequestMapping(value = "admin/article/upload",method = RequestMethod.POST)
-    public RestJson<Map<String,Object>> upload(@RequestParam("file") MultipartFile file){
+    public RestJson<Map<String,Object>> uploadArticle(@RequestParam("file") MultipartFile file){
+        return this.upload(file,"article");
+    }
+    @Token
+    @ApiOperation("配置图片上传")
+    @RequestMapping(value = "admin/config/upload",method = RequestMethod.POST)
+    public RestJson<Map<String,Object>> uploadConfig(@RequestParam("file") MultipartFile file){
+        return this.upload(file,"config");
+    }
+    private RestJson<Map<String,Object>> upload(@RequestParam("file") MultipartFile file,String type){
         RestJson<Map<String,Object>> restJson=new RestJson<>();
         try {
-            Map<String,Object> map=imgService.uploadImg(file,"article");
+            Map<String,Object> map=imgService.uploadImg(file,type);
             restJson.setData(map)
                     .setMsg("上传图片成功")
                     .setSuccess(true)
