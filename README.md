@@ -2,7 +2,7 @@
 
 ### [安装教程](https://github.com/pangyuworld/Pang-Blog/tree/master/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B)
 
-[更新日志](https://github.com/pangyuworld/Pang-Blog/tree/master/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)
+### [更新日志](https://github.com/pangyuworld/Pang-Blog/tree/master/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)
 
 ### 1、功能概要
 
