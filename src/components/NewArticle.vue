@@ -46,13 +46,11 @@
   </div>
 </template>
 <script>
-import { mavonEditor } from "mavon-editor";
-import "mavon-editor/dist/css/index.css";
 import { formatDate } from "../js/formatDate.js";
 export default {
   name: "editor",
   components: {
-    mavonEditor
+    
   },
   filters: {
     formatDate(time) {

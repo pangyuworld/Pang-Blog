@@ -67,7 +67,6 @@
 </template>
 <script>
 import Common from "./CommonNum";
-
 export default {
   data() {
     return {

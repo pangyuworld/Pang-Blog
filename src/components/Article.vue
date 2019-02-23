@@ -74,8 +74,8 @@
       </p>
       <div style="text-align:center">
         <!-- <Alert type="warning">您的操作较为敏感</Alert>
-        <Alert type="warning">需要验证管理员身份</Alert> -->
-        <br/>
+        <Alert type="warning">需要验证管理员身份</Alert>-->
+        <br>
         <Form :model="admin">
           <FormItem prop="user">
             <Input type="text" v-model="admin.username" placeholder="Username">
@@ -96,6 +96,14 @@
   </Card>
 </template>
 <script>
+import 'highlight.js/styles/googlecode.css'
+import hljs from 'highlight.js'
+
+
+hljs.highlightCode = function () { //自定义highlightCode方法，将只执行一次的逻辑去掉
+  let blocks = document.querySelectorAll('pre code');
+    [].forEach.call(blocks, hljs.highlightBlock);
+};
 export default {
   data() {
     return {
@@ -123,6 +131,7 @@ export default {
     };
   },
   mounted: function() {
+    hljs.highlightCode();
     this.$Spin.show();
     setTimeout(() => {
       this.$Spin.hide();
@@ -209,25 +218,25 @@ export default {
       }
     },
     deleteComment(id) {
-      if (this.GLOBAL.isEmpty(this.$store.state.token)){
+      if (this.GLOBAL.isEmpty(this.$store.state.token)) {
         this.deleteView = true;
-        return
+        return;
       }
       var that = this;
       this.$http({
         method: "delete",
-        url: that.GLOBAL.adress + "/admin/comment/"+id,
+        url: that.GLOBAL.adress + "/admin/comment/" + id,
         headers: {
           token: this.$store.state.token
         }
       }).then(function(res) {
-         that.$Notice.success({
+        that.$Notice.success({
           title: "删除评论成功"
         });
-          that.getComment(that.$route.params.id);
+        that.getComment(that.$route.params.id);
       });
     },
-    login(){
+    login() {
       var that = this;
       var parms = new URLSearchParams();
       parms.append("username", this.admin.username);
@@ -242,7 +251,7 @@ export default {
           that.$Notice.success({
             title: res.data.msg
           });
-          that.deleteView=false
+          that.deleteView = false;
         } else {
           that.$Notice.error({
             title: res.data.msg
@@ -260,12 +269,11 @@ export default {
   width: 1050px;
 }
 .mbody {
-  line-height: 25px;
   text-align: left;
-  letter-spacing: 2px;
-  font-size: 20px;
-  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
-    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  font-family: Tahoma, Arial, "Hiragino Sans GB", simsun, sans-serif;
+  font-size: 16px;
+  height: 100%;
+  line-height: 1.6;
 }
 .comment {
   line-height: 25px;
