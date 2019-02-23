@@ -4,6 +4,8 @@
 
 ### [更新日志](https://github.com/pangyuworld/Pang-Blog/tree/master/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)
 
+### [我的blog（示例demo）](https://pangyuworld.cn)
+
 ### 1、功能概要
 
 - 首页展示问候语及热门文章（点击量较多的文章）
