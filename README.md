@@ -1,24 +1,4 @@
 # Pang-Blog个人博客
-<div><div class="toc"><div class="toc">
-<ul>
-<li><a href="#pang-blog个人博客">Pang-Blog个人博客</a><ul>
-<li><a href="#概要">概要</a><ul>
-<li><a href="#1功能概要">1、功能概要</a></li>
-<li><a href="#2后台部分代码见spring分支">2、后台部分（代码见spring分支）</a></li>
-<li><a href="#3前端部分代码见vue分支">3、前端部分（代码见vue分支）</a></li>
-</ul>
-</li>
-<li><a href="#更新日志">更新日志</a><ul>
-<li><a href="#2019223">2019.2.23</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-</div>
-## 概要
 ### 1、功能概要
 
 - 首页展示问候语及热门文章（点击量较多的文章）
@@ -50,7 +30,3 @@ Api全局使用了**Restful Api**风格，实现了前后端分离的开发模�
 使用**[mavonEditor](https://github.com/hinesboy/mavonEditor)**进行文章编写。
 
 使用**[vue-dnd](https://github.com/hilongjw/vue-lazyload)**进行分组顺序拖拽。
-
-## 更新日志
-### 2019.2.23
-修复了浏览文章时，代码高高亮显示问题
