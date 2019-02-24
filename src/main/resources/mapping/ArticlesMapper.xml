@@ -127,9 +127,11 @@
   </update>
 
     <select id="selectAllArticle" resultMap="BaseResultMap">
-        select
+        SELECT
         <include refid="Base_Column_List"/>
-        from articles
+        FROM
+            articles
+        where articles.show=1
         order by first_time desc
     </select>
 
@@ -137,6 +139,7 @@
         select
         <include refid="Base_Column_List"/>
         from articles
+        where articles.show=1
         ORDER BY first_time DESC
         limit #{currIndex} , #{pageSize}
     </select>
@@ -163,10 +166,19 @@
     </select>
 
     <select id="selectByGroup" resultMap="BaseResultMap" parameterType="Map">
+
         select
         <include refid="Base_Column_List"/>
         from articles
         where article_group=#{articleGroup}
         ORDER BY first_time DESC
+    </select>
+
+    <select id="selectRealList" resultMap="BaseResultMap" parameterType="Map">
+        select
+        id, first_time, last_time, click_num, article_group, title, a.show
+        from articles a
+        ORDER BY first_time DESC
+        limit #{currIndex} , #{pageSize}
     </select>
 </mapper>

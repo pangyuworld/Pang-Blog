@@ -4,9 +4,10 @@ import com.pang.blog.entity.ArticleRoot;
 import com.pang.blog.entity.Articles;
 import com.pang.blog.entity.Comment;
 import com.pang.blog.jwt.Token;
+import com.pang.blog.kit.HtmlUtil;
 import com.pang.blog.kit.IpUtil;
 import com.pang.blog.kit.RestJson;
-import com.pang.blog.service.*;
+import com.pang.blog.service.ArticleService;
 import com.pang.blog.service.CommetnService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -54,6 +55,10 @@ public class ArticleController {
         } else {
             articlesList = articleService.getAllArticles();
         }
+        for (Articles a : articlesList) {
+            String str = HtmlUtil.delHTMLTag(a.getTexts());
+            a.setTexts(str.substring((str.length() > 200) ? 200  : str.length() ));
+        }
         restJson.setMsg("获取文章列表")
                 .setSuccess(true)
                 .setStatus(200)
@@ -61,6 +66,24 @@ public class ArticleController {
         return restJson;
     }
 
+    @Token
+    @ApiOperation("获取文章列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "页数", required = false, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "perpage", value = "每页数", required = false, dataType = "int", paramType = "query")
+    })
+    @RequestMapping(value = "admin/articles", method = RequestMethod.GET)
+    public RestJson<List<Articles>> getRealArticles(HttpServletRequest request) {
+        RestJson<List<Articles>> restJson = new RestJson<>();
+        List<Articles> articlesList;
+        articlesList = articleService.getRealArticles(Integer.parseInt(request.getParameter("page")), Integer.parseInt(request
+                .getParameter("perpage")));
+        restJson.setMsg("获取文章管理列表")
+                .setSuccess(true)
+                .setStatus(200)
+                .setData(articlesList);
+        return restJson;
+    }
 
     @ApiOperation("根据分组获取文章列表")
     @ApiImplicitParams({
@@ -196,10 +219,10 @@ public class ArticleController {
     }
 
     @ApiOperation("文章评论数量")
-    @RequestMapping(value = "article/common/{id}",method = RequestMethod.GET)
-    public RestJson<Integer> getCommonNum(@PathVariable int id){
-        RestJson<Integer> restJson=new RestJson<>();
-        int num=commetnService.getNum(id);
+    @RequestMapping(value = "article/common/{id}", method = RequestMethod.GET)
+    public RestJson<Integer> getCommonNum(@PathVariable int id) {
+        RestJson<Integer> restJson = new RestJson<>();
+        int num = commetnService.getNum(id);
         restJson.setMsg("查找评论数")
                 .setSuccess(true)
                 .setStatus(200)
@@ -209,12 +232,12 @@ public class ArticleController {
 
     @Token
     @ApiOperation("获得文章元数据")
-    @RequestMapping(value = "admin/article/{id}",method = RequestMethod.GET)
-    public RestJson<ArticleRoot> getRoot(@PathVariable int id){
-        RestJson<ArticleRoot> restJson=new RestJson<>();
-        ArticleRoot articleRoot=articleService.getArticleRoot(id);
-        if (articleRoot==null){
-            articleRoot=new ArticleRoot();
+    @RequestMapping(value = "admin/article/{id}", method = RequestMethod.GET)
+    public RestJson<ArticleRoot> getRoot(@PathVariable int id) {
+        RestJson<ArticleRoot> restJson = new RestJson<>();
+        ArticleRoot articleRoot = articleService.getArticleRoot(id);
+        if (articleRoot == null) {
+            articleRoot = new ArticleRoot();
             articleRoot.setId(id);
             articleRoot.setMarkdown(articleService.getById(id).getTexts());
         }
@@ -228,9 +251,9 @@ public class ArticleController {
     @Token
     @ApiOperation("修改文章内容")
     @RequestMapping(value = "admin/article", method = RequestMethod.PUT)
-    public RestJson<Integer> changeArticle(Articles articles,ArticleRoot articleRoot) {
+    public RestJson<Integer> changeArticle(Articles articles, ArticleRoot articleRoot) {
         RestJson<Integer> restJson = new RestJson<>();
-        int id = articleService.updateArticle(articles,articleRoot);
+        int id = articleService.updateArticle(articles, articleRoot);
 
         restJson.setData(id)
                 .setStatus(200)
@@ -241,12 +264,12 @@ public class ArticleController {
 
     @Token
     @ApiOperation("删除文章")
-    @RequestMapping(value = "admin/article/{id}",method = RequestMethod.DELETE)
-    public RestJson<String> deleteArticle(@PathVariable int id){
-        RestJson<String> restJson=new RestJson<>();
-        String title=articleService.getById(id).getTitle();
+    @RequestMapping(value = "admin/article/{id}", method = RequestMethod.DELETE)
+    public RestJson<String> deleteArticle(@PathVariable int id) {
+        RestJson<String> restJson = new RestJson<>();
+        String title = articleService.getById(id).getTitle();
         articleService.deleteArticle(id);
-        restJson.setMsg("删除文章:"+title)
+        restJson.setMsg("删除文章:" + title)
                 .setSuccess(true)
                 .setStatus(200);
         return restJson;
@@ -254,9 +277,9 @@ public class ArticleController {
 
     @Token
     @ApiOperation("删除评论")
-    @RequestMapping(value = "admin/comment/{id}",method = RequestMethod.DELETE)
-    public RestJson<Integer> deleteCommon(@PathVariable int id){
-        RestJson<Integer> restJson=new RestJson<>();
+    @RequestMapping(value = "admin/comment/{id}", method = RequestMethod.DELETE)
+    public RestJson<Integer> deleteCommon(@PathVariable int id) {
+        RestJson<Integer> restJson = new RestJson<>();
         restJson.setStatus(200)
                 .setSuccess(true)
                 .setMsg("删除评论")
@@ -264,10 +287,4 @@ public class ArticleController {
         return restJson;
     }
 
-    @Token
-    @ApiOperation("上传图片")
-    @RequestMapping(value = "admin/img",method = RequestMethod.POST)
-    public RestJson<String> uploadImg(MultipartFile file,String path){
-        return null;
-    }
 }

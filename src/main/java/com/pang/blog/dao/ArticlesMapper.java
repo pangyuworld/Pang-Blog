@@ -9,6 +9,8 @@ import java.util.Map;
 
 @Mapper
 public interface ArticlesMapper {
+    List<Articles> selectRealList(Map<String,Object> data);
+
     List<Articles> selectByGroup(Map<String,Object> data);
 
     List<Articles> selectMaxClick();

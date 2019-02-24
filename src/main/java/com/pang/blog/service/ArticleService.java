@@ -93,4 +93,11 @@ public class ArticleService {
         commentMapper.deleteCommentByArticle(id);
         return 1;
     }
+
+    public List<Articles> getRealArticles(int cuurIndex, int pageSize) {
+        Map<String, Object> page = new HashMap<>();
+        page.put("currIndex", (cuurIndex - 1) * pageSize);
+        page.put("pageSize", pageSize);
+        return mapper.selectRealList(page);
+    }
 }

@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.pang.blog</groupId>
     <artifactId>pang-blog</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>pang-blog</name>
     <description>WEB project from pang</description>
     <packaging>jar</packaging>

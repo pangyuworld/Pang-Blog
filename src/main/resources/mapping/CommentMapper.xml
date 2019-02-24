@@ -133,7 +133,7 @@
   <delete id="deleteCommentByArticle" parameterType="java.lang.Integer">
       delete from comment
       <where>
-        groups.id=#{id,jdbcType=INTEGER}
+        article_id=#{id,jdbcType=INTEGER}
       </where>
   </delete>
 </mapper>
