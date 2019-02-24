@@ -23,7 +23,7 @@
           </router-link>
           <br>
           <div class="article-body">
-            <div class="jianjie">{{deleteHtmlTag(article.texts.substring(0,270))}}</div>
+            <div class="jianjie">{{deleteHtmlTag(article.texts)}}</div>
           </div>
           <br>
           <time class="time">

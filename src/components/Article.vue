@@ -270,10 +270,12 @@ export default {
 }
 .mbody {
   text-align: left;
-  font-family: Tahoma, Arial, "Hiragino Sans GB", simsun, sans-serif;
-  font-size: 16px;
-  height: 100%;
-  line-height: 1.6;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+    font-size: 16px;
+    line-height: 1.5;
+}
+.mbody img{
+  max-width: 1000px;
 }
 .comment {
   line-height: 25px;

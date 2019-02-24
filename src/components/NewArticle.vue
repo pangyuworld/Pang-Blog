@@ -126,7 +126,6 @@ export default {
       parms.append("articleGroupe", this.group);
       parms.append("show", this.show);
       parms.append("markdown", this.markdown);
-      parms.append("articleGroup", this.group);
       this.$http({
         method: "POST",
         data: parms,

@@ -102,7 +102,10 @@ export default {
       var that = this;
       this.$http({
         method: "get",
-        url: that.GLOBAL.adress + "/articles" + "?page=" + a + "&perpage=" + b
+        url: that.GLOBAL.adress + "/admin/articles" + "?page=" + a + "&perpage=" + b,
+          headers: {
+            token: this.$store.state.token
+          }
       }).then(function(res) {
         that.articles = res.data.data;
       });
