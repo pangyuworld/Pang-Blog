@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -55,9 +54,14 @@ public class ArticleController {
         } else {
             articlesList = articleService.getAllArticles();
         }
-        for (Articles a : articlesList) {
-            String str = HtmlUtil.delHTMLTag(a.getTexts());
-            a.setTexts(str.substring((str.length() > 200) ? 200  : str.length() ));
+        for (int i = 0; i < articlesList.size(); i++) {
+            String str = HtmlUtil.delHTMLTag(articlesList.get(i).getTexts());
+            int length=str.length();
+            length=length>400?400:length;
+            articlesList.get(i).setTexts(str.substring(0,length));
+            if (length>=400){
+                articlesList.get(i).setTexts(articlesList.get(i).getTexts()+" ...");
+            }
         }
         restJson.setMsg("获取文章列表")
                 .setSuccess(true)
@@ -92,8 +96,17 @@ public class ArticleController {
     @RequestMapping(value = "articles/group/{group}", method = RequestMethod.GET)
     public RestJson<List<Articles>> getByGropu(@PathVariable int group) {
         RestJson<List<Articles>> restJson = new RestJson<>();
-        List<Articles> articles = articleService.getAllArticles(group);
-        restJson.setData(articles)
+        List<Articles> articlesList = articleService.getAllArticles(group);
+        for (int i = 0; i < articlesList.size(); i++) {
+            String str = HtmlUtil.delHTMLTag(articlesList.get(i).getTexts());
+            int length=str.length();
+            length=length>400?400:length;
+            articlesList.get(i).setTexts(str.substring(0,length));
+            if (length>=400){
+                articlesList.get(i).setTexts(articlesList.get(i).getTexts()+" ...");
+            }
+        }
+        restJson.setData(articlesList)
                 .setStatus(200)
                 .setSuccess(true)
                 .setMsg("根据分组获取文章列表");
