@@ -10,18 +10,19 @@ import global_ from './config/global'
 import VueDND from 'awe-dnd'
 import "mavon-editor/dist/css/index.css";
 import mavonEditor from 'mavon-editor'
+import Vant from 'vant';
+import 'vant/lib/index.css';
+
 
 Vue.prototype.GLOBAL = global_
 Vue.prototype.$http = Axios
 Vue.prototype.$qs = qs
 
+Vue.use(Vant);
 Vue.use(mavonEditor)
 Vue.use(VueDND)
 Vue.use(iView);
-
 Vue.config.productionTip = false
-
-
 
 new Vue({
   router,

@@ -1,5 +1,5 @@
 <template>
-  <Layout id="main-layout">
+  <Layout id="app">
     <Menu mode="horizontal" :theme="theme" active-name="1" @on-select="ClickMenu">
       <!-- LOGO -->
       <div class="blog-head-logo">
@@ -30,7 +30,7 @@
           <MenuItem name="theme-light">light</MenuItem>
           <MenuItem name="theme-dark">dark</MenuItem>
           <MenuItem name="theme-primary">primary</MenuItem>
-        </Submenu> -->
+        </Submenu>-->
         <!-- 进入后台 -->
         <MenuItem name="admin" to="/admin/config">
           <Icon type="ios-construct"/>后台
@@ -40,7 +40,7 @@
     <Content>
       <router-view class="content-detail"></router-view>
     </Content>
-    <Footer style="">
+    <Footer style>
       <div class="blog-footer">
         <Divider></Divider>
         <div class="blog-footer-code">
@@ -52,7 +52,7 @@
         </div>
       </div>
     </Footer>
-     <BackTop></BackTop>
+    <BackTop></BackTop>
   </Layout>
 </template>
 
@@ -66,9 +66,9 @@ export default {
       adminer: null,
       beian: null,
       theme: "light",
-      icon:null,
-      git:null,
-      adress:null
+      icon: null,
+      git: null,
+      adress: null
     };
   },
   mounted: function() {
@@ -78,7 +78,6 @@ export default {
     this.getBeian();
     var date = new Date();
     this.year = date.getFullYear();
-
   },
   methods: {
     ClickMenu: function(menuId) {
@@ -94,50 +93,50 @@ export default {
           break;
       }
     },
-    getIcon(){
-      var that=this;
+    getIcon() {
+      var that = this;
       this.$http({
-        method:"get",
+        method: "get",
         url: that.GLOBAL.adress + "/config/blog-icon"
-      }).then(function(res){
-        that.icon=that.GLOBAL.adress+res.data.data
-      })
+      }).then(function(res) {
+        that.icon = that.GLOBAL.adress + res.data.data;
+      });
     },
-    getGit(){
-      var that=this;
+    getGit() {
+      var that = this;
       this.$http({
-        method:"get",
+        method: "get",
         url: that.GLOBAL.adress + "/config/blog-git"
-      }).then(function(res){
-        that.git=res.data.data
-      })
+      }).then(function(res) {
+        that.git = res.data.data;
+      });
     },
-    getBeian(){
-      var that=this;
+    getBeian() {
+      var that = this;
       this.$http({
-        method:"get",
+        method: "get",
         url: that.GLOBAL.adress + "/config/blog-filing"
-      }).then(function(res){
-        that.beian=res.data.data
-      })
+      }).then(function(res) {
+        that.beian = res.data.data;
+      });
     },
-    getAdminer(){
-      var that=this;
+    getAdminer() {
+      var that = this;
       this.$http({
-        method:"get",
+        method: "get",
         url: that.GLOBAL.adress + "/config/blog-adminer"
-      }).then(function(res){
-        that.adminer=res.data.data
-      })
+      }).then(function(res) {
+        that.adminer = res.data.data;
+      });
     },
-    getAdress(){
-      var that=this;
+    getAdress() {
+      var that = this;
       this.$http({
-        method:"get",
+        method: "get",
         url: that.GLOBAL.adress + "/config/blog-adress"
-      }).then(function(res){
-        that.adress=res.data.data
-      })
+      }).then(function(res) {
+        that.adress = res.data.data;
+      });
     }
   }
 };
@@ -160,7 +159,15 @@ export default {
 .blog-head-nav {
   float: right;
 }
-.content-detail{
+.content-detail {
+}
+
+#app {
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
+    sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+  font-size: 16px;
+  line-height: 1.5;
 }
 </style>
 

@@ -60,17 +60,6 @@ export default {
         }
       });
     },
-    getImgList() {
-      var that = this;
-      this.$http({
-        method: "get",
-        url: that.GLOBAL.adress + "/homeimgs"
-      }).then(function(res) {
-        if (res.data.success) {
-          that.imgList = res.data.data;
-        }
-      });
-    },
     showText(str) {
       return this.GLOBAL.showText(str);
     }

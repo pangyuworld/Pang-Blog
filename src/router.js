@@ -13,59 +13,129 @@ import UserInfo from './components/UserInfo.vue'
 import ArticleManage from './components/ArticleManage.vue'
 import EditArticle from './components/EditArticle.vue'
 import GroupManage from './components/GroupManage.vue'
+import Index from './views/Index.vue'
+import Mobile from './views/Mobile.vue'
+import MHome from './mobile/Home.vue'
+import MArticleList from './mobile/ArticleList.vue'
+import MArticle from './mobile/Article.vue'
+import MMessage from './mobile/Message.vue'
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home
-    },
-    {
-      path: '/login',
-      name: "login",
-      component: Login
-    }, {
-      path: '/admin',
-      name: "admin",
-      component: Admin,
+      name: 'index',
+      component: Index,
       children: [
         {
-          path: 'article',
-          component: NewArticle
-        },{
-          path:'config',
-          component:Config
-        },{
-          path:'user',
-          component:UserInfo
-        },{
-          path:'articlemanage',
-          component:ArticleManage
-        },{
-          path:'article/:id',
-          component:EditArticle
-        },{
-          path:'group',
-          component:GroupManage
-        }
+          path: '',
+          name: "home",
+          component: Home
+        },
+        {
+          path: 'login',
+          name: "login",
+          component: Login
+        }, {
+          path: 'admin',
+          name: "admin",
+          component: Admin,
+          children: [
+            {
+              path: 'article',
+              component: NewArticle
+            }, {
+              path: 'config',
+              component: Config
+            }, {
+              path: 'user',
+              component: UserInfo
+            }, {
+              path: 'articlemanage',
+              component: ArticleManage
+            }, {
+              path: 'article/:id',
+              component: EditArticle
+            }, {
+              path: 'group',
+              component: GroupManage
+            }
+          ]
+        },
+        {
+          path: 'article-list',
+          name: 'article-list',
+          component: ArticleList
+        },
+        {
+          path: 'message',
+          name: 'message',
+          component: Message
+        }, {
+          path: 'article/:id',
+          name: 'article',
+          component: Article,
+        },
       ]
     },
     {
-      path: '/article-list',
-      name: 'article-list',
-      component: ArticleList
+      path:'/sj',
+      name:'mobile',
+      component:Mobile,
+      children: [
+        {
+          path: '',
+          name: "home",
+          component: MHome
+        },
+        {
+          path: 'login',
+          name: "login",
+          component: Login
+        }, {
+          path: 'admin',
+          name: "admin",
+          component: Admin,
+          children: [
+            {
+              path: 'article',
+              component: NewArticle
+            }, {
+              path: 'config',
+              component: Config
+            }, {
+              path: 'user',
+              component: UserInfo
+            }, {
+              path: 'articlemanage',
+              component: ArticleManage
+            }, {
+              path: 'article/:id',
+              component: EditArticle
+            }, {
+              path: 'group',
+              component: GroupManage
+            }
+          ]
+        },
+        {
+          path: 'article-list',
+          name: 'article-list',
+          component: MArticleList
+        },
+        {
+          path: 'message',
+          name: 'message',
+          component: MMessage
+        }, {
+          path: 'article/:id',
+          name: 'article',
+          component: MArticle,
+        },
+      ]
     },
     {
-      path: '/message',
-      name: 'message',
-      component: Message
-    }, {
-      path: '/article/:id',
-      name: 'article',
-      component: Article,
-    }, {
       name: '404',
       path: '/404',
       component: Error
