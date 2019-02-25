@@ -74,7 +74,7 @@ CREATE TABLE `config`  (
 -- ----------------------------
 INSERT INTO `config` VALUES ('blog-adminer', '小胖儿', '博客管理员名');
 INSERT INTO `config` VALUES ('blog-adress', 'https://pangyuworld.cn', '主人地址');
-INSERT INTO `config` VALUES ('blog-filing', '蜀ICP备18023566号', '备案号');
+INSERT INTO `config` VALUES ('blog-filing', '', '备案号');
 INSERT INTO `config` VALUES ('blog-git', 'https://github.com/pangyuworld/Pang-Blog', '博客git地址');
 INSERT INTO `config` VALUES ('blog-hello', '欢迎来到小胖的世界', '博客问候语');
 INSERT INTO `config` VALUES ('blog-icon', '/configImg/touxiang.jpg', '博客图标');
