@@ -102,6 +102,7 @@ export default {
           that.articles = res.data.data;
         });
       }
+      activeNames=[]
     },
     showText(str) {
       return this.GLOBAL.showText(str);

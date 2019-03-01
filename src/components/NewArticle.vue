@@ -1,57 +1,63 @@
 <template>
-  <div id="editor">
-    <br>
-    <div class="right">
-      <Card title="发布" :padding="10" shadow style="width: 300px;">
-        <br>
-        <Form :label-width="80">
-          <FormItem label="发布时间">
-            <DatePicker
-              type="datetime"
-              @on-change="time=$event"
-              v-model="time"
-              format="yyyy-MM-dd HH:mm:ss"
-            ></DatePicker>
-          </FormItem>
-          <FormItem label="分类目录">
-            <Select style="width:203.19px;" v-model="group">
-              <Option v-for="group in groups" :key="group.id" :value="group.id">{{group.groupName}}</Option>
-            </Select>
-          </FormItem>
-          <FormItem label="是否公开">
-            <RadioGroup v-model="show">
-              <Radio label="true"></Radio>&nbsp;&nbsp;&nbsp;&nbsp;
-              <Radio label="false"></Radio>
-            </RadioGroup>
-          </FormItem>
-          <FormItem class="btn">
-            <Button style="margin:5px;" type="success" @click="submit()">发布</Button>
-          </FormItem>
-        </Form>
-      </Card>
-    </div>
-    <div style="height:100%">
-      <h1 style="margin:20px;">撰写新文章</h1>
-      <Input style="margin:20px; width:80%" placeholder="在此输入标题" v-model="title" size="large"></Input>
-      <mavon-editor
-      ref=md
-        style="height: 80%;width:80%;margin:20px;"
-        code-style="vs2015"
-        :ishljs="true"
-        :scrollStyle="true"
-        @change="editText"
-        @imgAdd="$imgAdd"
-      ></mavon-editor>
-    </div>
+  <div>
+    <Row type="flex" justify="start">
+      <br>
+      <Col span="18" style="height:100%">
+        <div id="editor">
+          <h1 style="margin:20px;">撰写新文章</h1>
+          <Input style="margin:20px; width:97%" placeholder="在此输入标题" v-model="title" size="large"></Input>
+          <mavon-editor
+            ref="md"
+            style="height: 80%;margin:20px;"
+            code-style="vs2015"
+            :ishljs="true"
+            :scrollStyle="true"
+            @change="editText"
+            @imgAdd="$imgAdd"
+          ></mavon-editor>
+        </div>
+      </Col>
+      <Col span="6">
+        <Card title="发布" :padding="10" shadow style="width: 300px;">
+          <br>
+          <Form :label-width="80">
+            <FormItem label="发布时间">
+              <DatePicker
+                type="datetime"
+                @on-change="time=$event"
+                v-model="time"
+                format="yyyy-MM-dd HH:mm:ss"
+              ></DatePicker>
+            </FormItem>
+            <FormItem label="分类目录">
+              <Select style="width:203.19px;" v-model="group">
+                <Option
+                  v-for="group in groups"
+                  :key="group.id"
+                  :value="group.id"
+                >{{group.groupName}}</Option>
+              </Select>
+            </FormItem>
+            <FormItem label="是否公开">
+              <RadioGroup v-model="show">
+                <Radio label="true"></Radio>&nbsp;&nbsp;&nbsp;&nbsp;
+                <Radio label="false"></Radio>
+              </RadioGroup>
+            </FormItem>
+            <FormItem class="btn">
+              <Button style="margin:5px;" type="success" @click="submit()">发布</Button>
+            </FormItem>
+          </Form>
+        </Card>
+      </Col>
+    </Row>
   </div>
 </template>
 <script>
 import { formatDate } from "../js/formatDate.js";
 export default {
   name: "editor",
-  components: {
-    
-  },
+  components: {},
   filters: {
     formatDate(time) {
       var date = new Date(time);
@@ -71,7 +77,8 @@ export default {
       show: "true",
       texts: null,
       group: null,
-      markdown: null
+      markdown: null,
+      split: 0.8
     };
   },
   mounted: function() {
@@ -154,7 +161,7 @@ export default {
     // 绑定@imgAdd event
     $imgAdd(pos, $file) {
       var that = this;
-      const $vm = this.$refs.md
+      const $vm = this.$refs.md;
       var parms = new FormData();
       parms.append("file", $file);
       console.log($file);
@@ -186,7 +193,6 @@ export default {
   text-align: left;
 }
 .right {
-  float: right;
 }
 .btn {
   text-align: end;
