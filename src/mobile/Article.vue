@@ -15,7 +15,7 @@
       </div>
     </div>
     <Divider orientation="left"></Divider>
-    <div class="">
+    <div class="detial">
       <div v-html="article.texts"></div>
     </div>
     <Divider orientation="left"></Divider>
@@ -264,5 +264,8 @@ export default {
 <style>
 .marticle{
     text-align: left;
+}
+.detial img{
+  max-width: 100%;
 }
 </style>

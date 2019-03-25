@@ -18,10 +18,15 @@ export default {
       )
     ) {
       //如果是手机登陆，则跳转到/sj的界面
-      this.$router.push("/sj");
+      if(this.$route.path.substring(0,3)=="/sj")
+      return;
+      // this.$router.push("/sj"+this.$route.path);
+      this.$router.push("/sj"+this.$route.path)
     }else{
-      
-      this.$router.push("/");
+      if(this.$route.path.substring(0,3)=="/sj"){
+        console.log(this.$route.path.substr(3)+"/")
+        this.$router.push(this.$route.path.substr(3)+"/");
+        }
     }
   }
 };
